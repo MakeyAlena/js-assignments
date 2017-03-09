@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   return Date.parse(value);
+    return Date.parse(value);
 }
 
 /**
@@ -57,17 +57,17 @@ function parseDataFromIso8601(value) {
  */
 function isLeapYear(date) {
     let year = date.getFullYear();
-    
-   if (year % 4 !== 0) {
-   return false;
-   } else if (year % 100 !== 0) {
-return true;
-   } else if (year % 400 !== 0) {
-return false;
-   } else {
-return true;
-   }
- 
+
+    if (year % 4 !== 0) {
+        return false;
+    } else if (year % 100 !== 0) {
+        return true;
+    } else if (year % 400 !== 0) {
+        return false;
+    } else {
+        return true;
+    }
+
 }
 
 
@@ -87,12 +87,12 @@ return true;
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   let countHours = endDate.getHours() - startDate.getHours();
+    let countHours = endDate.getHours() - startDate.getHours();
     let countMinutes = endDate.getMinutes() - startDate.getMinutes();
     let countSeconds = endDate.getSeconds() - startDate.getSeconds();
     let countMilliseconds = endDate.getMilliseconds() - startDate.getMilliseconds();
     let str = '';
-    function plusZero (count, n) {
+    function plusZero(count, n) {
         count = count + '';
         while (count.length < n) {
             count = '0' + count;
@@ -100,11 +100,11 @@ function timeSpanToString(startDate, endDate) {
         return count;
     }
     countHours = plusZero(countHours, 2);
-    countMinutes = plusZero (countMinutes, 2);
-    countSeconds = plusZero (countSeconds, 2);
+    countMinutes = plusZero(countMinutes, 2);
+    countSeconds = plusZero(countSeconds, 2);
     countMilliseconds = plusZero(countMilliseconds, 3);
 
-   return str = countHours + ':' + countMinutes + ':' + countSeconds + '.' + countMilliseconds;
+    return str = countHours + ':' + countMinutes + ':' + countSeconds + '.' + countMilliseconds;
 }
 
 
@@ -122,20 +122,20 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-   
+
     let hours = date.getUTCHours();
     if (hours > 11) {
         hours = hours - 12;
     }
     let angleDegree = 0.5 * (60 * hours - 11 * date.getUTCMinutes());
-    
+
     if (angleDegree < 0) {
         angleDegree = - angleDegree;
     }
     else if (angleDegree > 180) {
         angleDegree = 360 - angleDegree;
     }
-    let angleRadian = angleDegree*Math.PI / 180;
+    let angleRadian = angleDegree * Math.PI / 180;
     console.log(angleRadian);
     return angleRadian;
 
