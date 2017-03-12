@@ -30,7 +30,15 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    if (num % 5 == 0 && num % 3 == 0) {
+        return 'FizzBuzz'
+    } else if (num % 3 == 0) {
+        return 'Fizz'
+    } else if (num % 5 == 0) {
+        return 'Buzz'
+    } else {
+        return num;
+    }
 }
 
 
@@ -46,7 +54,7 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    return n ? n * getFactorial(n - 1) : 1;
 }
 
 
@@ -63,7 +71,11 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    var sum = 0;
+    for (var i = n1; i <= n2; i++) {
+        sum = i + sum;
+    }
+    return sum;
 }
 
 
@@ -81,11 +93,13 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(a,b,c) {
-    throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+    if (a + b > c && c + a > b && c + b > a) {
+        return true;
+    } else {
+        return false;
+    }
 }
-
-
 /**
  * Returns true, if two specified axis-aligned rectangles overlap, otherwise false.
  * Each rectangle representing by object 
@@ -119,7 +133,14 @@ function isTriangle(a,b,c) {
  *  
  */
 function doRectanglesOverlap(rect1, rect2) {
-    throw new Error('Not implemented');
+    if (rect1.top + rect1.height <= rect2.top) {
+        return false;
+    } else if (rect1.left + rect1.width > rect2.left) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
@@ -150,7 +171,9 @@ function doRectanglesOverlap(rect1, rect2) {
  *   
  */
 function isInsideCircle(circle, point) {
-    throw new Error('Not implemented');
+    let a = circle.center.x - point.x;
+    let b = circle.center.y - point.y;
+    return Math.hypot(a, b) < circle.radius;
 }
 
 
@@ -166,7 +189,11 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    for (let i = 0; i < str.length; i++) {
+        if (str.slice(i + 1, str.length).indexOf(str[i]) === -1 && str.indexOf(str[i]) === i)
+            return str[i];
+    }
+    return null;
 }
 
 
@@ -196,6 +223,7 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
 }
 
 
+
 /**
  * Reverse the specified string (put all chars in reverse order)
  *
@@ -209,8 +237,13 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    const reversed = [];
+    for (let i = str.length - 1; i >= 0; i--) {
+        reversed.push(str[i]);
+    }
+    return reversed.join('');
 }
+
 
 
 /**
@@ -443,15 +476,15 @@ module.exports = {
     doRectanglesOverlap: doRectanglesOverlap,
     isInsideCircle: isInsideCircle,
     findFirstSingleChar: findFirstSingleChar,
-    getIntervalString : getIntervalString,
+    getIntervalString: getIntervalString,
     reverseString: reverseString,
     reverseInteger: reverseInteger,
     isCreditCardNumber: isCreditCardNumber,
     getDigitalRoot: getDigitalRoot,
     isBracketsBalanced: isBracketsBalanced,
-    timespanToHumanString : timespanToHumanString,
+    timespanToHumanString: timespanToHumanString,
     toNaryString: toNaryString,
     getCommonDirectoryPath: getCommonDirectoryPath,
     getMatrixProduct: getMatrixProduct,
-    evaluateTicTacToePosition : evaluateTicTacToePosition
+    evaluateTicTacToePosition: evaluateTicTacToePosition
 };
