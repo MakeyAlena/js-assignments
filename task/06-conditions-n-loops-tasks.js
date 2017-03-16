@@ -219,7 +219,28 @@ function findFirstSingleChar(str) {
  *
  */
 function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
-    throw new Error('Not implemented');
+    let str = '';
+    if (isStartIncluded) {
+        str += '[';
+    }
+    else {
+        str += '(';
+    }
+    if (a <= b) {
+        str += a + ', ';
+        str += b;
+    }
+    else {
+        str += b + ', ';
+        str += a;
+    }
+    if (isEndIncluded) {
+        str += ']';
+    }
+    else {
+        str += ')';
+    }
+    return str;
 }
 
 
@@ -259,7 +280,13 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    var int = 0;
+    while (num != 0) {
+        int = int * 10;
+        int = int + num % 10;
+        num = Math.floor(num / 10);
+    }
+    return int;
 }
 
 
@@ -284,7 +311,32 @@ function reverseInteger(num) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(ccn) {
-    throw new Error('Not implemented');
+    let array = ccn.toString().split('');
+    if (array.length % 2 == 0) {
+        for (let i = 0; i < array.length; i = i + 2) {
+            array[i] = array[i] * 2;
+            if (array[i] > 9) {
+                array[i] -= 9;
+            }
+        }
+    }
+    else {
+        for (let i = 1; i < array.length; i = i + 2) {
+            array[i] = array[i] * 2;
+            if (array[i] > 9) {
+                array[i] -= 9;
+            }
+        }
+    }
+    let sum = array.reduce(function (result, item) {
+        return result + parseInt(item);
+    }, 0);
+    if (sum % 10 == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
@@ -303,7 +355,14 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    let result;
+    do {
+        result = 0;
+        for (num; num > 0; num = Math.floor(num / 10))
+            result = result + num % 10;
+        num = result;
+    } while (result > 9)
+    return result;
 }
 
 
@@ -329,7 +388,21 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    const openedBrackets = ['[', '{', '<', '('];
+    const closedBrackets = [']', '}', '>', ')'];
+    const brackets = [];
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        if (openedBrackets.includes(char)) {
+            brackets.push(openedBrackets.indexOf(char))
+        }
+        if (closedBrackets.includes(char) && brackets[brackets.length - 1] === closedBrackets.indexOf(char)) {
+            brackets.pop();
+        } else if (closedBrackets.includes(char)) {
+            return false;
+        }
+    }
+    return brackets.length === 0;
 }
 
 
@@ -365,7 +438,38 @@ function isBracketsBalanced(str) {
  *
  */
 function timespanToHumanString(startDate, endDate) {
-    throw new Error('Not implemented');
+
+    const date = (endDate - startDate) / 1000;
+
+    const min = 60;
+    const hour = 60 * min;
+    const day = 24 * hour;
+    const month = 30 * day;
+    const year = 12 * month;
+
+    if (date > 0 && date <= 45) {
+        return 'a few seconds ago';
+    } else if (date > 45 && date <= 90) {
+        return 'a minute ago';
+    } else if (date > 90 && date <= 45 * min) {
+        return `${Math.round((date - 0.001) / min)} minutes ago`;
+    } else if (date > 45 * min && date <= 90 * min) {
+        return 'an hour ago';
+    } else if (date > 90 * min && date <= 22 * hour) {
+        return `${Math.round((date - 0.001) / hour)} hours ago`;
+    } else if (date > 22 * hour && date <= 36 * hour) {
+        return 'a day ago';
+    } else if (date > 36 * hour && date <= 25 * day) {
+        return `${Math.round((date - 0.001) / day)} days ago`;
+    } else if (date > 25 * day && date <= 45 * day) {
+        return 'a month ago';
+    } else if (date > 45 * day && date <= 345 * day) {
+        return `${Math.round((date - 0.001) / month)} months ago`;
+    } else if (date > 345 * day && date <= 545 * day) {
+        return 'a year ago';
+    } else {
+        return `${Math.round((date - 0.001) / year)} years ago`;
+    }
 }
 
 
@@ -389,7 +493,7 @@ function timespanToHumanString(startDate, endDate) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-    throw new Error('Not implemented');
+    return num.toString(n);
 }
 
 
@@ -406,7 +510,23 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
-    throw new Error('Not implemented');
+
+    const commonDirectory = [];
+    let equal;
+    for (let i = 0, len = pathes[0].length; i < len; i++) {
+        equal = true;
+        for (let j = 0; j < pathes.length - 1; j++) {
+            if (pathes[j][i] !== pathes[j + 1][i]) {
+                equal = false;
+                break;
+            }
+        }
+        if (equal) commonDirectory.push(pathes[0][i]);
+        else {
+            let lastSlash = commonDirectory.lastIndexOf('/');
+            return commonDirectory.slice(0, lastSlash + 1).join('');
+        }
+    }
 }
 
 
@@ -429,7 +549,19 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
-    throw new Error('Not implemented');
+    const MatrixProduc = [];
+    for (let i of m1) {
+        let line = [];
+        for (let j = 0; j < m2[0].length; j++) {
+            let el = 0;
+            for (let g = 0; g < m2.length; g++)
+                el += i[g] * m2[g][j];
+
+            line.push(el);
+        }
+        MatrixProduc.push(line);
+    }
+    return MatrixProduc;
 }
 
 
@@ -464,8 +596,44 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
-    throw new Error('Not implemented');
+    
+const values = {
+'X': 1,
+'0': 5,
+' ': 2
+};
+
+for (let i = 0; i < 3; i++){
+let sum = 0;
+for (let j of position[i]) 
+sum += values[j]; 
+if (sum === 3 || sum === 15) return evaluateWinner(sum);
 }
+
+for (let i = 0; i < 3; i++){
+let sum = 0;
+for (let j = 0; j < 3;j++) 
+sum += values[position[j][i]]; 
+if (sum === 3 || sum === 15) return evaluateWinner(sum);
+}
+
+let sum = 0;
+for (let i = 0; i < 3; i++)
+sum += values[position[i][i]]; 
+if (sum === 3 || sum === 15) return evaluateWinner(sum);
+
+sum = 0;
+var j = 2;
+for (let i = 0; i < 3; i ++)
+sum += values[position[i][j--]];
+if (sum === 3 || sum === 15) return evaluateWinner(sum);
+return undefined; 
+}
+
+function evaluateWinner(sum) {
+return sum === 3 ? 'X' : '0';
+}
+
 
 
 module.exports = {

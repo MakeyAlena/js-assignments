@@ -32,8 +32,9 @@
  * @return {Iterable.<string>}
  *
  */
-function* get99BottlesOfBeer() {
+function* get99BottlesOfBeer(start, end) {
     throw new Error('Not implemented');
+
 }
 
 
