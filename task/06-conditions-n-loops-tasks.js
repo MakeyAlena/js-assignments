@@ -633,9 +633,6 @@ return undefined;
 function evaluateWinner(sum) {
 return sum === 3 ? 'X' : '0';
 }
-
-
-
 module.exports = {
     getFizzBuzz: getFizzBuzz,
     getFactorial: getFactorial,
